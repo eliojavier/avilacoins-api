@@ -3,7 +3,7 @@
     "username": "palmariu_ac",
     "password": "avilacoins(mwi{Br@bE7T",
     "database": "palmariu_ac",
-    "host": "www.palmarius.com.ve",
+    "host": "www.palmarius.com.ve:3306",
     "dialect": "mysql"
   },
   "test": {
@@ -17,7 +17,7 @@
     "username": "palmariu_ac",
     "password": "avilacoins(mwi{Br@bE7T",
     "database": "palmariu_ac",
-    "host": "www.palmarius.com.ve",
+    "host": "www.palmarius.com.ve:3306",
     "dialect": "mysql"
   }
 }
