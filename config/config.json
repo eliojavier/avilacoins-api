@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "palmariu_ac",
-    "password": "avilacoins(mwi{Br@bE7T",
-    "database": "palmariu_ac",
-    "host": "www.palmarius.com.ve:3306",
+    "username": "testi_ac",
+    "password": "avilacoins2017*",
+    "database": "testingi_ac",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": "testi_ac",
+    "password": "avilacoins2017*",
+    "database": "testingi_ac",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
-    "username": "palmariu_ac",
-    "password": "avilacoins(mwi{Br@bE7T",
-    "database": "palmariu_ac",
-    "host": "www.palmarius.com.ve:3306",
+    "username": "testi_ac",
+    "password": "avilacoins2017*",
+    "database": "testingi_ac",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }
