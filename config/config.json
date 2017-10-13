@@ -3,21 +3,21 @@
     "username": "testi_ac",
     "password": "avilacoins2017*",
     "database": "testingi_ac",
-    "host": "localhost",
+    "host": "www.testing.info.ve",
     "dialect": "mysql"
   },
   "test": {
     "username": "testi_ac",
     "password": "avilacoins2017*",
     "database": "testingi_ac",
-    "host": "localhost",
+    "host": "www.testing.info.ve",
     "dialect": "mysql"
   },
   "production": {
     "username": "testi_ac",
     "password": "avilacoins2017*",
     "database": "testingi_ac",
-    "host": "localhost",
+    "host": "www.testing.info.ve",
     "dialect": "mysql"
   }
 }

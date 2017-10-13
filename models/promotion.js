@@ -56,22 +56,6 @@ module.exports = function (sequelize, DataTypes) {
       values: ['open', 'closed'],
       allowNull: false
     },
-    // fk_commerceType: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   references: {
-    //     model: CommerceType,
-    //     key: 'id',
-    //   }
-    // },
-    // fk_user: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   references: {
-    //     model: User,
-    //     key: 'id',
-    //   }
-    // }
   }, {
     tableName: 'Promotion',
     freezeTableName: true,
@@ -83,12 +67,6 @@ module.exports = function (sequelize, DataTypes) {
           onDelete: 'restrict',
           onUpdate: 'restrict'
         });
-        // Promotion.belongsTo(models.CommerceType, {
-        //   as: 'commerceType',
-        //   foreignKey: {name: 'fk_commerceType', allowNull: false},
-        //   onDelete: 'restrict',
-        //   onUpdate: 'restrict'
-        // });
         Promotion.belongsToMany(models.CommerceType, {
           as: 'categories',
           through: {model: 'CommercePromotion', unique: false},

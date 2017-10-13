@@ -1,5 +1,10 @@
 module.exports = function (sequelize, DataTypes) {
   let Location = sequelize.define('Location', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -25,40 +30,39 @@ module.exports = function (sequelize, DataTypes) {
         }
         this.setDataValue('type', val)
       }
-    },
-
+    }
   }, {
     tableName: 'Location',
     freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        Location.hasMany(models.Location, {
-          as: 'locations',
-          foreignKey: {name: 'fk_location', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        Location.belongsTo(models.Location, {
-          as: 'location',
-          foreignKey: {name: 'fk_location', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        Location.hasMany(models.User, {
-          as: 'users',
-          foreignKey: {name: 'fk_location', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        Location.hasOne(models.Rate, {
-          as: 'rate',
-          foreignKey: {name: 'fk_location', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        })
-      }
-    },
-    instanceMethods: {}
+    sync: true
   });
+
+  Location.associate = function (models) {
+    Location.hasMany(models.Location, {
+      as: 'locations',
+      foreignKey: {name: 'fk_location', allowNull: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    Location.belongsTo(models.Location, {
+      as: 'location',
+      foreignKey: {name: 'fk_location', allowNull: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    Location.hasMany(models.User, {
+      as: 'users',
+      foreignKey: {name: 'fk_location', allowNull: false},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    Location.hasOne(models.Rate, {
+      as: 'rate',
+      foreignKey: {name: 'fk_location', allowNull: false},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    })
+  };
+
   return Location
 };

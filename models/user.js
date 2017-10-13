@@ -1,56 +1,20 @@
-let bcrypt = require('bcrypt');
+let bcrypt = require('bcryptjs');
+let Location = require('./location');
 
-/**
- * @swagger
- * definitions:
- *   User:
- *     type: object
- *     required:
- *       - email
- *       - name
- *       - lastname
- *       - status
- *     properties:
- *       email:
- *         type: string
- *       name:
- *         type: string
- *       lastname:
- *         type: string
- *       username:
- *         type: string
- *       status:
- *         type: string
- *       phone:
- *         type: string
- *       profilePictureName:
- *         type: string
- */
 module.exports = function (sequelize, DataTypes) {
   let User = sequelize.define('User', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      set: function (val) {
-        if (val && typeof val === 'string') {
-          return this.setDataValue('name', val.toLowerCase())
-        }
-        this.setDataValue('name', val)
-      },
+      allowNull: false
     },
-    lastName: {
+    last_name: {
       type: DataTypes.STRING,
       allowNull: true,
-      field: 'last_name',
-      validate: {
-        // isAlpha: true
-      },
-      set: function (val) {
-        if (val && typeof val === 'string') {
-          return this.setDataValue('lastName', val.toLowerCase())
-        }
-        this.setDataValue('lastName', val)
-      }
     },
     email: {
       type: DataTypes.STRING,
@@ -81,7 +45,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true
     },
-    birthDate: {
+    birth_date: {
       type: DataTypes.STRING,
       allowNull: true,
       field: 'birth_date',
@@ -91,20 +55,18 @@ module.exports = function (sequelize, DataTypes) {
       values: ['M', 'F'],
       allowNull: true
     },
-    profilePicture: {
+    profile_picture: {
       type: DataTypes.STRING,
       allowNull: true,
-      field: 'profile_picture',
       set: function (val) {
         if (val) {
           this.setDataValue('profile_picture', val.toLowerCase())
         }
       }
     },
-    docId: {
+    doc_id: {
       type: DataTypes.STRING,
       allowNull: true,
-      field: 'doc_id',
     },
     rif: {
       type: DataTypes.STRING,
@@ -140,150 +102,134 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       set: function (val) {
         if (val) {
-          var salt = bcrypt.genSaltSync(10)
-          var hash = bcrypt.hashSync(val, salt)
+          let salt = bcrypt.genSaltSync(10);
+          let hash = bcrypt.hashSync(val, salt);
           this.setDataValue('password', hash)
         }
       }
     },
-    auth: {
-      type: DataTypes.VIRTUAL
-    },
-    validationToken: {
+    validation_token: {
       type: DataTypes.STRING,
-      field: 'validation_token',
       allowNull: true,
       unique: true
     },
-    passwordToken: {
+    password_token: {
       type: DataTypes.STRING,
-      field: 'password_token',
       allowNull: true,
       unique: true
     },
-    emailNotification: {
+    email_notification: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      field: 'email_notification',
       defaultValue: function () {
         return true
       }
     },
-    smsNotification: {
+    sms_notification: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      field: 'sms_notification',
       defaultValue: function () {
         return false
       }
     },
     type: {
-      type: DataTypes.ENUM('user', 'commerce'),
+      type: DataTypes.ENUM(['user', 'commerce']),
       allowNull: false
     },
     role: {
-      type: DataTypes.ENUM('user', 'admin', 'superadmin'),
+      type: DataTypes.ENUM(['user', 'admin', 'superadmin']),
       allowNull: false
     }
   }, {
+    underscored: true,
     tableName: 'User',
-    freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        User.hasOne(models.UserAvilaCoins, {
-          as: 'userAvilaCoins',
-          foreignKey: {name: 'fk_user', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.hasMany(models.BankAccount, {
-          as: 'bankAccounts',
-          foreignKey: {name: 'fk_user', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.hasOne(models.Account, {
-          as: 'account',
-          foreignKey: {name: 'fk_user', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.belongsTo(models.Location, {
-          as: 'location',
-          foreignKey: {name: 'fk_location', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.belongsTo(models.CommerceType, {
-          as: 'commerceType',
-          foreignKey: {name: 'fk_commerce_type', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.belongsToMany(models.Role, {
-          as: 'roles',
-          through: 'Role_User',
-          foreignKey: 'role_id',
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.belongsToMany(models.User, {
-          as: 'transfersFrom',
-          through: {model: 'Transfer', unique: false},
-          foreignKey: 'fk_sender',
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.belongsToMany(models.User, {
-          as: 'transfersTo',
-          through: {model: 'Transfer', unique: false},
-          foreignKey: 'fk_receptor',
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.belongsToMany(models.User, {
-          as: 'myContacts',
-          through: {model: 'Contact', unique: false},
-          foreignKey: 'fk_owner',
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        User.belongsToMany(models.User, {
-          as: 'contacts',
-          through: {model: 'Contact', unique: false},
-          foreignKey: 'fk_contact',
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        // User.hasMany(models.Promotion, {
-        //   as: 'promotions',
-        //   foreignKey: {name: 'fk_user', allowNull: false},
-        //   onDelete: 'restrict',
-        //   onUpdate: 'restrict'
-        // });
-        User.hasMany(models.Transaction, {
-          as: 'transactions',
-          foreignKey: {name: 'fk_user', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-      }
-    },
-    instanceMethods: {
-      toJSON: function () {
-        var values = this.get();
-        delete values.pin;
-        delete values.password;
-        delete values.tokens;
-        return values
-      },
-      validPassword: function (password) {
-        return bcrypt.compareSync(password, this.password)
-      },
-      validPin: function (pin) {
-        return bcrypt.compareSync(pin, this.pin)
-      }
-    }
+    freezeTableName: true
   });
+
+  User.associate = function (models) {
+    User.hasMany(models.BankAccount, {
+      as: 'bankAccounts',
+      foreignKey: {name: 'fk_user', allowNull: false},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    User.hasOne(models.Account, {
+      as: 'account',
+      foreignKey: {name: 'fk_user', allowNull: false},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    User.belongsTo(models.Location, {
+      as: 'location',
+      foreignKey: {name: 'fk_location', allowNull: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    User.belongsTo(models.CommerceType, {
+      as: 'commerceType',
+      foreignKey: {name: 'fk_commerce_type', allowNull: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    User.belongsToMany(models.User, {
+      as: 'transfersFrom',
+      through: {model: 'Transfer', unique: false},
+      foreignKey: 'fk_sender',
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    User.belongsToMany(models.User, {
+      as: 'transfersTo',
+      through: {model: 'Transfer', unique: false},
+      foreignKey: 'fk_receptor',
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    User.belongsToMany(models.User, {
+      as: 'myContacts',
+      through: {model: 'Contact', unique: false},
+      foreignKey: 'fk_owner',
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    User.belongsToMany(models.User, {
+      as: 'contacts',
+      through: {model: 'Contact', unique: false},
+      foreignKey: 'fk_contact',
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    // User.hasMany(models.Promotion, {
+    //   as: 'promotions',
+    //   foreignKey: {name: 'fk_user', allowNull: false},
+    //   onDelete: 'restrict',
+    //   onUpdate: 'restrict'
+    // });
+    User.hasMany(models.Transaction, {
+      as: 'transactions',
+      foreignKey: {name: 'fk_user', allowNull: false},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+  };
+
+  User.prototype.toJSON = function() {
+    let values = this.get();
+    delete values.pin;
+    delete values.password;
+    delete values.validation_token;
+    delete values.password_token;
+    return values
+  };
+
+  User.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password)
+  };
+
+  User.prototype.validPin = function(pin) {
+    return bcrypt.compareSync(pin, this.pin)
+  };
+
   return User
-}
+};
+

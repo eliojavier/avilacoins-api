@@ -1,8 +1,8 @@
-var mysql = require('mysql')
+let mysql = require('mysql')
   , async = require('async');
 
-var PRODUCTION_DB = 'palmariu_ac'
-  , TEST_DB = 'app_test_database';
+let PRODUCTION_DB = 'testingi_ac'
+  , TEST_DB = 'testingi_ac';
 
 exports.MODE_TEST = 'mode_test';
 exports.MODE_PRODUCTION = 'mode_production';
@@ -14,9 +14,9 @@ var state = {
 
 exports.connect = function(mode, done) {
   state.pool = mysql.createPool({
-    host: 'www.palmarius.com.ve:3306',
-    user: 'palmariu_ac',
-    password: 'avilacoins(mwi{Br@bE7T',
+    host: 'www.testing.info.ve:3306',
+    user: 'testi_ac',
+    password: 'avilacoins2017*',
     database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB
   });
 

@@ -9,19 +9,19 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
   }, {
+    underscored: true,
     tableName: 'Account',
-    freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        Account.belongsTo(models.User, {
-          as: 'user',
-          foreignKey: {name: 'fk_user', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        })
-      }
-    },
-    instanceMethods: {}
+    freezeTableName: true
   });
+
+  Account.associate = function(models) {
+    Account.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: {name: 'fk_user', allowNull: false},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    })
+  };
+
   return Account
 };

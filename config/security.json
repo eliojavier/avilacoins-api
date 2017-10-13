@@ -1,0 +1,8 @@
+{
+  "security": {
+    "token": {
+      "secret": "fadsf8q4rthrbcxdy3h71s324hjs347k",
+      "timeout": 600
+    }
+  }
+}

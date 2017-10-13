@@ -1,0 +1,11 @@
+{
+  "from": "contacto@testing.info.ve",
+  "host": "mail.testing.info.ve",
+  "secureConnection": false,
+  "port": 587,
+  "transportMethod": "SMTP",
+  "auth": {
+    "user": "contacto@testing.info.ve",
+    "pass": "avilacoins2017*"
+  }
+}

@@ -9,6 +9,9 @@ let db = require('./db');
 
 let index = require('./routes/index');
 let users = require('./routes/users');
+let commerceTypes = require('./routes/commerceTypes');
+let locations = require('./routes/locations');
+let admin = require('./routes/admin');
 
 let app = express();
 
@@ -26,6 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/commerceTypes', commerceTypes);
+app.use('/locations', locations);
+app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,5 +50,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+if (app.get('env') === 'production') {
+  app.listen(3000);
+}
 
 module.exports = app;
