@@ -1,3 +1,4 @@
 {
-  "validationLink": "http://www.testing.info.ve/email-verification/"
+  "validationLink": "https://www.testing.info.ve/email-verification/",
+  "resetPasswordLink": "https://admin.testing.info.ve/forgot-password/"
 }

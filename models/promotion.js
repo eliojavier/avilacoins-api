@@ -13,30 +13,25 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    startDate: {
+    start_date: {
       type: DataTypes.DATEONLY,
       allowNull: true,
-      field: 'start_date'
     },
-    endDate: {
+    end_date: {
       type: DataTypes.DATEONLY,
       allowNull: true,
-      field: 'end_date'
     },
-    minAge: {
+    min_age: {
       type: DataTypes.STRING,
       allowNull: true,
-      field: 'min_age'
     },
-    maxAge: {
+    max_age: {
       type: DataTypes.STRING,
       allowNull: true,
-      field: 'max_age'
     },
-    maxCoupons: {
+    coupons_limit: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      field: 'max_coupons',
     },
     male: {
       type: DataTypes.BOOLEAN,
@@ -46,10 +41,9 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull: true
     },
-    promoCode: {
+    promo_code: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'promo_code'
     },
     status: {
       type: DataTypes.ENUM,
@@ -57,26 +51,26 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     },
   }, {
+    underscored: true,
     tableName: 'Promotion',
     freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        Promotion.belongsTo(models.User, {
-          as: 'user',
-          foreignKey: {name: 'fk_user', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        Promotion.belongsToMany(models.CommerceType, {
-          as: 'categories',
-          through: {model: 'CommercePromotion', unique: false},
-          foreignKey: 'fk_promotion',
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-      }
-    },
-    instanceMethods: {}
   });
+
+  Promotion.associate = function (models) {
+    Promotion.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: {name: 'fk_user', allowNull: false},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    Promotion.belongsToMany(models.CommerceType, {
+      as: 'categories',
+      through: {model: 'CommercePromotion', unique: false},
+      foreignKey: 'fk_promotion',
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+  };
+
   return Promotion
 };

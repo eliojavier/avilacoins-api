@@ -11,26 +11,27 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
   }, {
+    underscored: true,
     tableName: 'CommerceType',
     freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        CommerceType.hasMany(models.User, {
-          as: 'users',
-          foreignKey: {name: 'fk_commerce_type', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        CommerceType.belongsToMany(models.Promotion, {
-          as: 'commercePromotions',
-          through: {model: 'CommercePromotion', unique: false},
-          foreignKey: 'fk_commerce_type',
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-      }
-    },
-    instanceMethods: {}
+
   });
+
+  CommerceType.associate = function (models) {
+    CommerceType.hasMany(models.User, {
+      as: 'users',
+      foreignKey: {name: 'fk_commerce_type', allowNull: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    CommerceType.belongsToMany(models.Promotion, {
+      as: 'commercePromotions',
+      through: {model: 'CommercePromotion', unique: false},
+      foreignKey: 'fk_commerce_type',
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+  };
+
   return CommerceType
 }

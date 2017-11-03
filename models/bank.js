@@ -17,19 +17,19 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
   }, {
+    underscored: true,
     tableName: 'Bank',
     freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        Bank.hasMany(models.BankAccount, {
-          as: 'bankAccounts',
-          foreignKey: {name: 'fk_bank', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        })
-      }
-    },
-    instanceMethods: {}
   });
+
+  Bank.associate = function (models) {
+    Bank.hasMany(models.BankAccount, {
+      as: 'bankAccounts',
+      foreignKey: {name: 'fk_bank', allowNull: false},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    })
+  };
+
   return Bank
 };

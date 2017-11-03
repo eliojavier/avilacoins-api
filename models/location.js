@@ -32,6 +32,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   }, {
+    underscored: true,
     tableName: 'Location',
     freezeTableName: true,
     sync: true

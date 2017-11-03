@@ -1,5 +1,6 @@
 let db = require('../models');
 let randToken = require('rand-token');
+let securityConfig = require('../config/security.json');
 
 module.exports = {
   create: function (user) {
@@ -62,7 +63,15 @@ module.exports = {
       })
     }
   },
-  findActiveStatusByEmail: function (email) {
+  findAll: function () {
+    return db.User.findAll({
+      where: {
+        role: 'user',
+        type: 'user'
+      }
+    })
+  },
+  findActiveUserByEmail: function (email) {
     return db.User.findOne({
       where: {
         status: 'active',
@@ -77,6 +86,14 @@ module.exports = {
             type: 'commerce'
           },
         ]
+      }
+    })
+  },
+  findActiveUserByUsername: function (username) {
+    return db.User.findOne({
+      where: {
+        username: username,
+        status: 'active'
       }
     })
   },
@@ -101,6 +118,65 @@ module.exports = {
         validation_token: validationToken
       }
     })
+  },
+  findById: function (user) {
+    return db.User.findOne({
+      where: {
+        status: 'active',
+        id: user.id
+      }
+    })
+  },
+  findByPasswordToken: function (passwordToken) {
+    return db.User.findOne({
+      where: {
+        password_token: passwordToken
+      }
+    })
+  },
+  findUserDetailsById: function (id) {
+    return db.User.findOne({
+      where: {
+        id: id
+      }
+    })
+  },
+  updatePassword: function (user, password) {
+    return db.User.update(
+      {
+        password: password
+      },
+      {
+        where: {
+          id: user.id
+        }
+      }
+    )
+  },
+  restoreDefaultPassword: function (userId) {
+    let defaultPassword = securityConfig.security.defaultPassword;
+    return db.User.update(
+      {
+        password: defaultPassword
+      },
+      {
+        where: {
+          id: userId
+        }
+      }
+    )
+  },
+  updatePin: function (user, pin) {
+    return db.User.update(
+      {
+        pin: pin
+      },
+      {
+        where: {
+          id: user.id
+        }
+      }
+    )
   },
   updateValidationToken: function (user) {
     return db.User.update(
@@ -127,10 +203,22 @@ module.exports = {
       }
     )
   },
-  updateStatus: function(user, status) {
+  updateStatus: function (user, status) {
     return db.User.update(
       {
         status: status
+      },
+      {
+        where: {
+          id: user.id
+        }
+      }
+    )
+  },
+  updatePasswordToken: function (user, token) {
+    return db.User.update(
+      {
+        password_token: token
       },
       {
         where: {

@@ -1,5 +1,3 @@
-let User = require('./user');
-
 module.exports = function (sequelize, DataTypes) {
   let Transfer = sequelize.define('Transfer', {
     id: {
@@ -8,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true
     },
     amount: {
-      type: DataTypes.DECIMAL(15,2),
+      type: DataTypes.DECIMAL(15, 2),
       allowNull: false,
     },
     description: {
@@ -16,19 +14,19 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
   }, {
+    underscored: true,
     tableName: 'Transfer',
     freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        Transfer.belongsTo(models.User, {
-          as: 'user',
-          foreignKey: {name: 'fk_receptor', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-      }
-    },
-    instanceMethods: {}
   });
+
+  Transfer.associate = function (models) {
+    Transfer.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: {name: 'fk_receptor', allowNull: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+  };
+
   return Transfer
 };

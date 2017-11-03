@@ -27,19 +27,19 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     }
   }, {
+    underscored: true,
     tableName: 'Payment',
-    freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        Payment.hasOne(models.Transaction, {
-          as: 'transaction',
-          foreignKey: {name: 'fk_payment', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-      }
-    },
-    instanceMethods: {}
+    freezeTableName: true
   });
+
+  Payment.associate = function (models) {
+    Payment.hasOne(models.Transaction, {
+      as: 'transaction',
+      foreignKey: {name: 'fk_payment', allowNull: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+  };
+
   return Payment
 };

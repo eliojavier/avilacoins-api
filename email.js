@@ -47,6 +47,36 @@ module.exports = {
       }
       console.log("email sent");
     });
+  },
+  approvedWithdrawEmail: function (user) {
+    app.mailer.send('approved-withdraw', {
+      to: user.email, // REQUIRED. This can be a comma delimited string just like a normal email to field.
+      subject: '¡Solicitud de canje realizada!', // REQUIRED.
+      name: user.name,
+    }, function (err) {
+      if (err) {
+        // handle error
+        console.log('There was an error sending the email', err);
+        return;
+      }
+      console.log("email sent");
+    });
+  },
+  forgotPasswordEmail: function (user, token) {
+    let resetPasswordLink = linksConfig.resetPasswordLink;
+    app.mailer.send('forgot-password', {
+      to: user.email,
+      subject: 'Recuperación de contraseña',
+      name: user.name,
+      resetPasswordLink: resetPasswordLink + token
+    }, function (err) {
+      if (err) {
+        // handle error
+        console.log('There was an error sending the email', err);
+        return;
+      }
+      console.log("email sent");
+    });
   }
 };
 

@@ -2,28 +2,25 @@ let CommerceType = require('./commerceType');
 let Promotion = require('./promotion');
 
 module.exports = function (sequelize, DataTypes) {
-  let CommercePromotion = sequelize.define('CommercePromotion', {
-
-  }, {
+  let CommercePromotion = sequelize.define('CommercePromotion', {}, {
+    underscored: true,
     tableName: 'CommercePromotion',
     freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        CommercePromotion.belongsTo(models.CommerceType, {
-          as: 'commerceType',
-          foreignKey: {name: 'fk_commerce_type', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        CommercePromotion.belongsTo(models.Promotion, {
-          as: 'promotion',
-          foreignKey: {name: 'fk_promotion', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-      }
-    },
-    instanceMethods: {}
   });
+
+  CommercePromotion.associate = function (models) {
+    CommercePromotion.belongsTo(models.CommerceType, {
+      as: 'commerceType',
+      foreignKey: {name: 'fk_commerce_type', primaryKey: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+    CommercePromotion.belongsTo(models.Promotion, {
+      as: 'promotion',
+      foreignKey: {name: 'fk_promotion', primaryKey: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
+  };
   return CommercePromotion
 };

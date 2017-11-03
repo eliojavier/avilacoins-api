@@ -1,15 +1,13 @@
 module.exports = function (sequelize, DataTypes) {
   let BankAccount = sequelize.define('BankAccount', {
-    accountNumber: {
+    account_number: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      field: 'account_number'
     },
-    accountHolder: {
+    account_holder: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'account_holder'
     },
     email: {
       type: DataTypes.STRING,
@@ -21,31 +19,32 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
   }, {
+    underscored: true,
     tableName: 'BankAccount',
-    freezeTableName: true,
-    classMethods: {
-      associate: function (models) {
-        BankAccount.belongsTo(models.Bank, {
-          as: 'bank',
-          foreignKey: {name: 'fk_bank', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        BankAccount.belongsTo(models.User, {
-          as: 'holder',
-          foreignKey: {name: 'fk_user', allowNull: false},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        });
-        BankAccount.hasMany(models.Transaction, {
-          as: 'withdraws',
-          foreignKey: {name: 'fk_bankAccount', allowNull: true},
-          onDelete: 'restrict',
-          onUpdate: 'restrict'
-        })
-      }
-    },
-    instanceMethods: {}
+    freezeTableName: true
   });
+
+  BankAccount.associate = function (models) {
+      BankAccount.belongsTo(models.Bank, {
+        as: 'bank',
+        foreignKey: {name: 'fk_bank', allowNull: false},
+        onDelete: 'restrict',
+        onUpdate: 'restrict'
+      });
+      BankAccount.belongsTo(models.User, {
+        as: 'holder',
+        foreignKey: {name: 'fk_user', allowNull: false},
+        onDelete: 'restrict',
+        onUpdate: 'restrict'
+      });
+      BankAccount.hasMany(models.Transaction, {
+        as: 'withdraws',
+        foreignKey: {name: 'fk_bankAccount', allowNull: true},
+        onDelete: 'restrict',
+        onUpdate: 'restrict'
+      })
+
+  };
+
   return BankAccount
 };

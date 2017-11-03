@@ -1,12 +1,11 @@
-let HTTPError = require('node-http-error');
 let CommerceTypeRepository = require('../repositories/commerceTypeRepository');
 
 module.exports = {
   findAll: function () {
     return CommerceTypeRepository.findAll()
-      .then(commerces => {
+      .then(commerceTypes => {
         let result = {};
-        result.commerces = commerces;
+        result.commerceTypes = commerceTypes;
         return Promise.resolve(result);
       })
   }
