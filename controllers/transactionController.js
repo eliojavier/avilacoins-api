@@ -83,17 +83,113 @@ module.exports = {
   },
   approveWithdrawRequest: function (withdraw) {
     return TransactionRepository.approveWithdrawRequest(withdraw)
-      .then (user => {
+      .then(user => {
         if (user) {
           email.approvedWithdrawEmail(user);
           LogRepository.createApprovedWithdrawRecord(withdraw)
-            .then (log => {
+            .then(log => {
 
             });
           let result = {};
           result.success = true;
           return Promise.resolve(result);
         }
+      })
+  },
+  findUserWithdrawById: function (user, id) {
+    return TransactionRepository.findUserWithdrawById(user, id)
+      .then(withdraw => {
+        let result = {};
+        result.withdraw = withdraw;
+        return Promise.resolve(result);
+      })
+  },
+  findUserWithdraws: function (user, page) {
+    return TransactionRepository.findUserWithdraws(user, page)
+      .then(withdraws => {
+        let result = {};
+        result.withdraws = withdraws;
+        return Promise.resolve(result);
+      })
+  },
+  findUserWithdrawsByYear: function (user, year, page) {
+    return TransactionRepository.findUserWithdrawsByYear(user, year, page)
+      .then(withdraws => {
+        let result = {};
+        result.withdraws = withdraws;
+        return Promise.resolve(result);
+      });
+  },
+  findUserWithdrawsByMonth: function (user, month, page) {
+    return TransactionRepository.findUserWithdrawsByMonth(user, month, page)
+      .then(withdraws => {
+        let result = {};
+        result.withdraws = withdraws;
+        return Promise.resolve(result);
+      });
+  },
+  findUserWithdrawsByLastThreeMonths: function (user, page) {
+    return TransactionRepository.findUserWithdrawsByLastThreeMonths(user, page)
+      .then(withdraws => {
+        let result = {};
+        result.withdraws = withdraws;
+        return Promise.resolve(result);
+      });
+  },
+  findUserWithdrawsByDateRange: function (user, range, page) {
+    return TransactionRepository.findUserWithdrawsByDateRange(user, range, page)
+      .then(withdraws => {
+        let result = {};
+        result.withdraws = withdraws;
+        return Promise.resolve(result);
+      })
+  },
+  findUserPurchases: function (user, page) {
+    return TransactionRepository.findUserPurchases(user, page)
+      .then(purchases => {
+        let result = {};
+        result.purchases = purchases;
+        return Promise.resolve(result);
+      })
+  },
+  findUserPurchaseById: function (user, id) {
+    return TransactionRepository.findUserPurchaseById(user,id)
+      .then(purchase => {
+        let result = {};
+        result.purchase = purchase;
+        return Promise.resolve(result);
+      })
+  },
+  findUserPurchasesByYear: function (user, year, page) {
+    return TransactionRepository.findUserPurchasesByYear(user, year, page)
+      .then(purchases => {
+        let result = {};
+        result.purchases = purchases;
+        return Promise.resolve(result);
+      })
+  },
+  findUserPurchasesByMonth: function (user, month, page) {
+    return TransactionRepository.findUserPurchasesByMonth(user, month, page)
+      .then(purchases => {
+        let result = {};
+        result.purchases = purchases;
+        return Promise.resolve(result);
+      })
+  },
+  findUserPurchasesByLastThreeMonths: function (user, page) {
+    return TransactionRepository.findUserPurchasesByLastThreeMonths(user, page)
+      .then(purchases => {
+        let result = {};
+        result.purchases = purchases;
+        return Promise.resolve(result);
+      })
+  },
+  findUserPurchasesByDateRange: function (user, range, page) {
+    return TransactionRepository.findUserPurchasesByDateRange(user, range, page)
+      .then(purchases => {
+        let result = {};
+        result.purchases = purchases;
+        return Promise.resolve(result);
       })
   }
 };

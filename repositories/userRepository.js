@@ -153,6 +153,18 @@ module.exports = {
       }
     )
   },
+  restorePassword: function (userId, password) {
+    return db.User.update(
+      {
+        password: password
+      },
+      {
+        where: {
+          id: userId
+        }
+      }
+    )
+  },
   restoreDefaultPassword: function (userId) {
     let defaultPassword = securityConfig.security.defaultPassword;
     return db.User.update(
