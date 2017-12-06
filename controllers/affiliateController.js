@@ -41,5 +41,13 @@ module.exports = {
         result.users = users;
         return Promise.resolve(result);
       })
+  },
+  findById: function (id) {
+    return AffiliateRepository.findById(id)
+      .then(user => {
+        let result = {};
+        result.user = user;
+        return Promise.resolve(result);
+      })
   }
 };

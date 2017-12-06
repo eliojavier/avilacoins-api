@@ -72,4 +72,15 @@ module.exports = {
       include: [{model: db.CommerceType, as: 'commerceType', attributes: ['name']}]
     })
   },
+  findById: function (id) {
+    return db.User.findOne({
+      where: {
+        id: id
+      },
+      include: [
+        {model: db.CommerceType, as: 'commerceType', attributes: ['name']},
+        {model: db.Location, as: 'location'}
+      ]
+    })
+  }
 };

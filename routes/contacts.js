@@ -1,10 +1,22 @@
 let express = require('express');
 let router = express.Router();
-let contactController = require('../controllers/contactController');
+let ContactController = require('../controllers/contactController');
 let RoleMiddleware = require('../middlewares/roleMiddleware');
 
-router.get('/users', RoleMiddleware.validateUserRole, function (req, res, next) {
-  contactController.findContactsByOwnerId(req.user)
+router.get('/', RoleMiddleware.validateUserRole, function (req, res, next) {
+  ContactController.findContactsByOwnerId(req.user)
+    .then(response => res.json(response))
+    .catch(err => next(err))
+});
+
+router.get('/:username', RoleMiddleware.validateUserRole, function (req, res, next) {
+  ContactController.findContactByUsername(req.user, req.params.username)
+    .then(response => res.json(response))
+    .catch(err => next(err))
+});
+
+router.post('/', RoleMiddleware.validateUserRole, function (req, res, next) {
+  ContactController.create(req.user, req.body)
     .then(response => res.json(response))
     .catch(err => next(err))
 });
