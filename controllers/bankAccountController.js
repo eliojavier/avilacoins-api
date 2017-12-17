@@ -15,18 +15,18 @@ module.exports = {
         return Promise.resolve(result);
       })
   },
-  destroy: function (bankAccount) {
-    return BankAccountRepository.destroy(bankAccount)
-      .then(response => {
-        console.log(response);
-        // if (deletedRecord === 1) {
-        //   let result = {};
-        //   result.message = 'Registro eliminado';
-        //   return result
-        // }
-        // else {
-        //   return Promise.reject(new BadRequestException(err))
-        // }
+  destroy: function (user, id) {
+    return BankAccountRepository.destroy(user, id)
+      .then(deletedRecords => {
+        console.log(deletedRecords);
+        if (deletedRecords >= 1) {
+          let result = {};
+          result.message = 'bank account deleted';
+          return Promise.resolve(result);
+        }
+        else {
+          throw new HTTPError(400, 'bank account not deleted');
+        }
       })
   }
 };

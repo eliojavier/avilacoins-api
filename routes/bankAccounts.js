@@ -15,8 +15,10 @@ router.get('/', RoleMiddleware.validateUserRole, function (req, res, next) {
     .catch(err => next(err))
 });
 
-router.delete('/', RoleMiddleware.validateUserRole, function (req, res, next) {
-
+router.delete('/:id', RoleMiddleware.validateUserRole, function (req, res, next) {
+  BankAccountController.destroy(req.user, req.params.id)
+    .then(response => res.json(response))
+    .catch(err => next(err))
 });
 
 module.exports = router;

@@ -23,10 +23,11 @@ module.exports = {
       include: [{model: db.Bank, as: 'bank', attributes: ['name']}]
     });
   },
-  destroy: function (bankAccount) {
+  destroy: function (user, id) {
     return db.BankAccount.destroy({
       where: {
-        id: bankAccount.id
+        id: id,
+        fk_user: user.id
       }
     });
   },
