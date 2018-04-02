@@ -1,8 +1,8 @@
 let mysql = require('mysql')
   , async = require('async');
 
-let PRODUCTION_DB = 'testingi_ac'
-  , TEST_DB = 'testingi_ac';
+let PRODUCTION_DB = 'heroku_c0c64a6d852804d'
+  , TEST_DB = 'heroku_c0c64a6d852804d';
 
 exports.MODE_TEST = 'mode_test';
 exports.MODE_PRODUCTION = 'mode_production';
@@ -14,9 +14,9 @@ var state = {
 
 exports.connect = function(mode, done) {
   state.pool = mysql.createPool({
-    host: 'www.testing.info.ve:3306',
-    user: 'testi_ac',
-    password: 'avilacoins2017*',
+    host: 'us-cdbr-iron-east-05.cleardb.net',
+    user: 'b2ae179e50d4d9',
+    password: 'a4424a19',
     database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB
   });
 
