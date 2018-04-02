@@ -9,7 +9,7 @@ module.exports = {
       ],
       include: [
         {
-          model: db.User, as: 'users', attributes: ['id', 'username']
+          model: db.User, as: 'users', attributes: ['id', 'username', 'name']
         }
       ]
     });

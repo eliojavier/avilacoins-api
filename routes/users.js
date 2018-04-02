@@ -59,7 +59,7 @@ router.put('/password', RoleMiddleware.validateRegisteredUser, function (req, re
     .catch(err => next(err))
 });
 
-router.put('/forgot-password/password', RoleMiddleware.validateRegisteredUser, function (req, res, next) {
+router.put('/forgot-password/password', function (req, res, next) {
   UserController.updatePassword(req.body.userId, req.body.password)
     .then(response => res.json(response))
     .catch(err => next(err))

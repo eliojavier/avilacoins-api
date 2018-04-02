@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "testi_ac",
-    "password": "avilacoins2017*",
-    "database": "testingi_ac",
-    "host": "www.testing.info.ve",
+    "username": "root",
+    "password": "root",
+    "database": "avilacoins",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {

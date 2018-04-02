@@ -12,7 +12,7 @@ module.exports = {
       gender: Joi.allow(null),
       address: Joi.string().required(),
       pin: Joi.string().length(4).regex(/^[0-9]+$/).required(),
-      password: Joi.string().min(8).max(10).regex(/[A-Z]/).regex(/[0-9]/).regex(/[!@#$%^&*()_+.,;:?]/).required(),
+      password: Joi.string().min(8).max(20).regex(/[A-Z]/).regex(/[0-9]/).regex(/[!@#$%^&*()_+.,;:?]/).required(),
       fkCommerceType: Joi.allow(null),
       fkLocation: Joi.number().required(),
       rif: Joi.allow(null),

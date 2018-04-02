@@ -9,7 +9,11 @@ module.exports = {
     return UserRepository.findActiveUserByUsername(transfer.username)
       .then(receptor => {
         if (!receptor) {
-          throw new HTTPError(400, 'user not found');
+          let result = {};
+          result.success = false;
+          result.message = 'user not found';
+          return Promise.resolve(result);
+          // throw new HTTPError('user not found');
         }
         return AccountRepository.hasEnoughBalance(user, transfer.amount)
           .then(account => {
