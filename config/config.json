@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "root",
-    "password": "root",
-    "database": "avilacoins",
-    "host": "localhost",
+    "username": "b2ae179e50d4d9",
+    "password": "a4424a19",
+    "database": "heroku_c0c64a6d852804d",
+    "host": "us-cdbr-iron-east-05.cleardb.net",
     "dialect": "mysql"
   },
   "test": {
-    "username": "testi_ac",
-    "password": "avilacoins2017*",
-    "database": "testingi_ac",
-    "host": "www.testing.info.ve",
+    "username": "b2ae179e50d4d9",
+    "password": "a4424a19",
+    "database": "heroku_c0c64a6d852804d",
+    "host": "us-cdbr-iron-east-05.cleardb.net",
     "dialect": "mysql"
   },
   "production": {
-    "username": "testi_ac",
-    "password": "avilacoins2017*",
-    "database": "testingi_ac",
-    "host": "www.testing.info.ve",
+    "username": "b2ae179e50d4d9",
+    "password": "a4424a19",
+    "database": "heroku_c0c64a6d852804d",
+    "host": "us-cdbr-iron-east-05.cleardb.net",
     "dialect": "mysql"
   }
 }
