@@ -32,6 +32,29 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 module.exports = {
+  sendgridWelcomeEmail: function (user) {
+    let configValidationLink = linksConfig.validationLink;
+    let validationLink = configValidationLink + user.validation_token;
+    var helper = require('sendgrid').mail;
+    let from_email = new helper.Email('avilacoinsdev@gmail.com');
+    let to_email = new helper.Email(user.email);
+    let subject = '¡Verifica tu correo electrónico!';
+    let content = new helper.Content('text/plain', 'Hola' + user.name + ', por favor verifica tu cuenta haciendo click en el siguiente enlace: ' + validationLink);
+    let mail = new helper.Mail(from_email, subject, to_email, content);
+
+    let sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+    let request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: mail.toJSON(),
+    });
+
+    sg.API(request, function(error, response) {
+      console.log(response.statusCode);
+      console.log(response.body);
+      console.log(response.headers);
+    });
+  },
   welcomeEmail: function (user) {
     let validationLink = linksConfig.validationLink;
     app.mailer.send('confirm-email', {

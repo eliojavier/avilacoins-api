@@ -8,6 +8,8 @@ let cors = require('cors');
 
 let db = require('./db');
 
+let dotenv = require('dotenv').config();
+
 let index = require('./routes/index');
 let accounts = require('./routes/accounts');
 let admin = require('./routes/admin');

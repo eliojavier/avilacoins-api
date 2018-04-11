@@ -28,7 +28,8 @@ module.exports = {
           throw new HTTPError(400, 'Datos inválidos');
         }
         if (userCreated.status === 'email-validation') {
-          Email.welcomeEmail(userCreated);
+          // Email.welcomeEmail(userCreated);
+          Email.sendgridWelcomeEmail(userCreated);
           UserRepository.updateEmailNotificationStatus(userCreated, true)
         }
         return Promise.resolve(userCreated)
