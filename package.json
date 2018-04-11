@@ -27,6 +27,7 @@
     "node-gyp-install": "^2.2.0",
     "node-http-error": "^2.0.0",
     "rand-token": "^0.3.0",
+    "sendgrid": "^5.2.3",
     "sequelize": "4.13.2",
     "sequelize-cli": "3.0.0",
     "serve-favicon": "~2.4.5",
