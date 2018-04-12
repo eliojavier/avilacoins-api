@@ -1,4 +1,4 @@
 {
-  "validationLink": "https://www.testing.info.ve/email-verification/",
-  "resetPasswordLink": "https://admin.testing.info.ve/forgot-password/"
+  "validationLink": "https://avilacoinswebapp.herokuapp.com/email-verification/",
+  "resetPasswordLink": "https://avilacoinswebapp.herokuapp.com/forgot-password/"
 }
