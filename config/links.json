@@ -1,4 +1,4 @@
 {
-  "validationLink": "https://avilacoinswebapp.herokuapp.com/email-verification/",
-  "resetPasswordLink": "https://avilacoinswebapp.herokuapp.com/forgot-password/"
+  "validationLink": "https://avilacoinswebapp.herokuapp.com/#/email-verification/",
+  "resetPasswordLink": "https://avilacoinswebapp.herokuapp.com/#/forgot-password/"
 }
