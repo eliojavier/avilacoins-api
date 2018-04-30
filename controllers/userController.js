@@ -41,7 +41,10 @@ module.exports = {
   login: function (email, password) {
     return UserRepository.findActiveUserByEmail(email)
       .then(user => {
-        if (!user || !user.validPassword(password)) {
+        if (!user) {
+          throw new HTTPError(400, 'User not found');
+        }
+        else if (!user.validPassword(password)) {
           throw new HTTPError(400, 'Invalid email or password');
         }
         return LogRepository.createLoginRecord(user)
