@@ -29,7 +29,7 @@ module.exports = {
         }
         if (userCreated.status === 'email-validation') {
           // Email.welcomeEmail(userCreated);
-          Email.sendgridWelcomeEmail(userCreated);
+          Email.welcomeEmail(userCreated);
           UserRepository.updateEmailNotificationStatus(userCreated, true)
         }
         return Promise.resolve(userCreated)
