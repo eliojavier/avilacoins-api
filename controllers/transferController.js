@@ -2,6 +2,7 @@ let TransferRepository = require('../repositories/transferRepository');
 let UserRepository = require('../repositories/userRepository');
 let AccountRepository = require('../repositories/accountRepository');
 let LogRepository = require('../repositories/logRepository');
+let PromotionController = require('../controllers/promotionController');
 let HTTPError = require('node-http-error');
 
 module.exports = {
@@ -33,6 +34,7 @@ module.exports = {
                           .then(transfer => {
                             return LogRepository.createTransferRecord(transfer)
                               .then(log => {
+                                PromotionController.findAvailablePromotions(user, receptor);
                                 let result = {};
                                 result.success = true;
                                 result.id = transfer.id;

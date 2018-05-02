@@ -238,5 +238,14 @@ module.exports = {
         }
       }
     )
+  },
+  findByIdIncludingLocation(user) {
+    return db.User.findOne({
+      where: {
+        status: 'active',
+        id: user.id
+      },
+      include: [{model: db.Location, as: 'commerceType', attributes: ['name']}]
+    })
   }
 };

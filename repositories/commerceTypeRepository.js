@@ -7,5 +7,13 @@ module.exports = {
         ['name', 'ASC']
       ],
     })
+  },
+  findById: function (id) {
+    return db.CommerceType.findOne({
+      where: {
+        id: id
+      },
+      include: [{model: db.Promotion, as: 'commercePromotions'}]
+    })
   }
 };

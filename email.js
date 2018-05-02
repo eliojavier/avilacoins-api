@@ -27,7 +27,7 @@ module.exports = {
     let from_email = new helper.Email('avilacoinsdev@gmail.com');
     let to_email = new helper.Email(user.email);
     let subject = '¡Verifica tu correo electrónico!';
-    let content = new helper.Content('text/plain', 'Hola' + user.name + ', por favor verifica tu cuenta haciendo click en el siguiente enlace: ' + validationLink);
+    let content = new helper.Content('text/plain', 'Hola ' + user.name + ', por favor verifica tu cuenta haciendo click en el siguiente enlace: ' + validationLink);
     let mail = new helper.Mail(from_email, subject, to_email, content);
 
     let sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
@@ -71,6 +71,31 @@ module.exports = {
     let to_email = new helper.Email(user.email);
     let subject = 'Recuperación de contraseña';
     let content = new helper.Content('text/plain', 'Hola ' + user.name + ', por favor haz click en el siguiente enlace para recuperar tu contraseña: ' + resetPasswordLink);
+    let mail = new helper.Mail(from_email, subject, to_email, content);
+
+    let sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+    let request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: mail.toJSON(),
+    });
+
+    sg.API(request, function (error, response) {
+      console.log(response.statusCode);
+      console.log(response.body);
+      console.log(response.headers);
+    });
+  },
+  promotionNotificationEmail: function (user, promotion, commerceType, receptor, location) {
+    let helper = require('sendgrid').mail;
+    let from_email = new helper.Email('avilacoinsdev@gmail.com');
+    let to_email = new helper.Email(user.email);
+    let subject = '¡Mira estas promociones!';
+    let content = new helper.Content('text/html', '<p>Hola ' + user.name + ', mira estas promociones en ' + commerceType.name + ' que Ávila Coins tiene para ti: </p>' +
+                                    '<h4>' + promotion.name + ': ' + promotion.description + '</h4>' +
+                                    '<h3>' + receptor.name + '</h3>' +
+                                    '<h4> Direccion: ' + receptor.address + '</h4>' +
+                                    '<h4>' + location.state + ', ' + location.city + ', ' + location.zone + '</h4>');
     let mail = new helper.Mail(from_email, subject, to_email, content);
 
     let sg = require('sendgrid')(process.env.SENDGRID_API_KEY);

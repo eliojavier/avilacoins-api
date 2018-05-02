@@ -54,6 +54,20 @@ module.exports = {
         type: Sequelize.QueryTypes.select
       });
   },
+  findUserAvailablePromotions: function (user) {
+    return db.sequelize.query("SELECT  id, name, description, " +
+      "DATE_FORMAT(start_date, '%d/%m/%Y') as start_date, " +
+      "DATE_FORMAT(end_date, '%d/%m/%Y') as end_date, " +
+      "min_age, max_age, coupons_limit, male, female " +
+      "promo_code " +
+      "FROM Promotion " +
+      "WHERE fk_user = :user_id AND status = 'open' " +
+      "ORDER BY status, created_at DESC, name ASC",
+      {
+        replacements: {user_id: user.id},
+        type: Sequelize.QueryTypes.select
+      });
+  },
   validateName: function (user, name) {
     return db.Promotion.count({
       where: {
@@ -63,6 +77,24 @@ module.exports = {
     })
   },
   target: function (promotion) {
+    return db.sequelize.query(" SELECT COUNT(sender.id) AS quantity " +
+      "FROM User sender, User receptor, Transfer t, CommerceType ct " +
+      "WHERE t.fk_sender = sender.id " +
+      "AND sender.gender IN (:genders) " +
+      "AND DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(sender.birth_date)), '%Y')+0 BETWEEN :minAge AND :maxAge " +
+      "AND t.fk_receptor = receptor.id " +
+      "AND receptor.fk_commerce_type = ct.id " +
+      "AND ct.id IN (:categoriesIds)",
+      {
+        replacements: {
+          minAge: promotion.minAge,
+          maxAge: promotion.maxAge,
+          categoriesIds: promotion.categoriesIds,
+          genders: promotion.genders
+        },
+        type: Sequelize.QueryTypes.select});
+  },
+  findTarget: function (user, promotion) {
     return db.sequelize.query(" SELECT COUNT(sender.id) AS quantity " +
       "FROM User sender, User receptor, Transfer t, CommerceType ct " +
       "WHERE t.fk_sender = sender.id " +

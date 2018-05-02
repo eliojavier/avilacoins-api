@@ -82,5 +82,5 @@ module.exports = {
         {model: db.Location, as: 'location'}
       ]
     })
-  }
+  },
 };
