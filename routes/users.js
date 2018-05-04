@@ -4,6 +4,8 @@ let UserController = require('../controllers/userController');
 let validate = require('express-validation');
 let userValidator = require('../middlewares/param_validations/user');
 let RoleMiddleware = require('../middlewares/roleMiddleware');
+let multer  = require('multer');
+let upload = multer({ dest: 'uploads/' });
 
 router.post('/register', validate(userValidator.create), function (req, res, next) {
   UserController.create(req.body)
@@ -21,6 +23,10 @@ router.get('/profile', RoleMiddleware.validateUserRole, function (req, res, next
   UserController.findById(req.user)
     .then(response => res.json(response))
     .catch(err => next(err))
+});
+
+router.post('/profile/avatar', upload.single('avatar'), function (req, res, next) {
+  console.log('success');
 });
 
 router.get('/', RoleMiddleware.validateAdminRole, function (req, res, next) {
