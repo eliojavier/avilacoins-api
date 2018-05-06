@@ -30,13 +30,13 @@ router.get('/profile', RoleMiddleware.validateUserRole, function (req, res, next
 router.post('/profile/avatar', function (req, res, next) {
   let form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
-    let old_path = files.avatar.path,
-      file_size = files.avatar.size,
-      file_ext = files.avatar.name.split('.').pop(),
-      index = old_path.lastIndexOf('/') + 1,
-      file_name = old_path.substr(index),
-      new_path = path.join(process.env.PWD, '/uploads/', file_name + '.' + file_ext);
-    console.log(old_path+file_size+file_ext+index+file_name+new_path);
+    let old_path = files.avatar.path;
+      // file_size = files.avatar.size,
+      // file_ext = files.avatar.name.split('.').pop(),
+      // index = old_path.lastIndexOf('/') + 1,
+      // file_name = old_path.substr(index);
+      // new_path = path.join(process.env.PWD, '/uploads/', file_name + '.' + file_ext);
+    console.log(old_path);
   });
 });
 
