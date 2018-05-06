@@ -6,6 +6,7 @@ let userValidator = require('../middlewares/param_validations/user');
 let RoleMiddleware = require('../middlewares/roleMiddleware');
 let multer  = require('multer');
 let upload = multer({ dest: 'uploads/' });
+let formidable = require('formidable');
 
 router.post('/register', validate(userValidator.create), function (req, res, next) {
   UserController.create(req.body)
@@ -23,6 +24,13 @@ router.get('/profile', RoleMiddleware.validateUserRole, function (req, res, next
   UserController.findById(req.user)
     .then(response => res.json(response))
     .catch(err => next(err))
+});
+
+router.post('/profile/avatar', function (req, res, next) {
+  let form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+
+  });
 });
 
 router.post('/profile/avatar', upload.single('avatar'), function (req, res, next) {
