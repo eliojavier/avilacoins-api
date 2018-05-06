@@ -33,9 +33,9 @@ router.post('/profile/avatar', function (req, res, next) {
   });
 });
 
-router.post('/profile/avatar', upload.single('avatar'), function (req, res, next) {
-  console.log('success');
-});
+// router.post('/profile/avatar', upload.single('avatar'), function (req, res, next) {
+//   console.log('success');
+// });
 
 router.get('/', RoleMiddleware.validateAdminRole, function (req, res, next) {
   UserController.findAll()
