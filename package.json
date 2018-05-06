@@ -19,6 +19,7 @@
     "express-mailer": "^0.3.1",
     "express-validation": "^1.0.2",
     "faker": "^4.1.0",
+    "formidable": "^1.2.1",
     "http-status": "^1.0.1",
     "jade": "~1.11.0",
     "joi": "^11.3.4",
