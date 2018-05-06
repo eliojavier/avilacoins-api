@@ -6,6 +6,10 @@ let jwt = require('jsonwebtoken');
 let randToken = require('rand-token');
 let Email = require('../email');
 let config = require('../config/security.json');
+let formidable = require('formidable');
+let path = require('path');
+let fs = require('fs');
+http = require('http');
 
 module.exports = {
   createToken: function (user) {
@@ -250,5 +254,52 @@ module.exports = {
             throw new HTTPError(500, 'user password token not updated');
           })
       })
+  },
+  uploadAvatar: function (req, res) {
+    let result = {};
+    let form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      if (files != null) {
+        if (files.avatar) {
+          let old_path = files.avatar.path;
+          let file_size = files.avatar.size;
+          let file_ext = files.avatar.name.split('.').pop();
+          let index = old_path.lastIndexOf('/') + 1;
+          let file_name = old_path.substr(index);
+          let new_path = path.join(process.env.PWD, '/uploads/', file_name + '.' + file_ext);
+          console.log(old_path);
+          console.log(file_size);
+          console.log(file_ext);
+          console.log(index);
+          console.log(file_name);
+          console.log(new_path);
+
+          fs.readFile(old_path, function(err, data) {
+            fs.writeFile(new_path, data, function(err) {
+              fs.unlink(old_path, function(err) {
+                if (err) {
+                  res.status(500);
+                  res.json({'success': false});
+                } else {
+                  result.success = true;
+                  result.message = 'done';
+                  return Promise.resolve(result);
+                }
+              });
+            });
+          });
+        }
+        else {
+          result.success = false;
+          result.message = 'no avatar input';
+          return Promise.resolve(result);
+        }
+      }
+      else {
+        result.success = false;
+        result.message = 'no files';
+        return Promise.resolve(result);
+      }
+    });
   }
 };
