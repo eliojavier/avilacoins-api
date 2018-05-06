@@ -7,6 +7,7 @@ let RoleMiddleware = require('../middlewares/roleMiddleware');
 let multer  = require('multer');
 let upload = multer({ dest: 'uploads/' });
 let formidable = require('formidable');
+let path = require('path');
 
 router.post('/register', validate(userValidator.create), function (req, res, next) {
   UserController.create(req.body)
@@ -29,7 +30,13 @@ router.get('/profile', RoleMiddleware.validateUserRole, function (req, res, next
 router.post('/profile/avatar', function (req, res, next) {
   let form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
-
+    let old_path = files.file.path,
+      file_size = files.file.size,
+      file_ext = files.file.name.split('.').pop(),
+      index = old_path.lastIndexOf('/') + 1,
+      file_name = old_path.substr(index),
+      new_path = path.join(process.env.PWD, '/uploads/', file_name + '.' + file_ext);
+    console.log(old_path+file_size+file_ext+index+file_name+new_path);
   });
 });
 
