@@ -9,7 +9,12 @@ let config = require('../config/security.json');
 let formidable = require('formidable');
 let path = require('path');
 let fs = require('fs');
-http = require('http');
+const log4js = require('log4js');
+log4js.configure({
+  appenders: { log: { type: 'file', filename: 'avilacoins.log' } },
+  categories: { default: { appenders: ['log'], level: 'error' } }
+});
+const logger = log4js.getLogger('log');
 
 module.exports = {
   createToken: function (user) {
@@ -256,6 +261,7 @@ module.exports = {
       })
   },
   uploadAvatar: function (req, res) {
+    logger.info('Upload avatar');
     let result = {};
     let form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {

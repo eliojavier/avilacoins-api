@@ -4,6 +4,19 @@ let UserController = require('../controllers/userController');
 let validate = require('express-validation');
 let userValidator = require('../middlewares/param_validations/user');
 let RoleMiddleware = require('../middlewares/roleMiddleware');
+const log4js = require('log4js');
+let winston = require('winston');
+log4js.configure({
+  appenders: { cheese: { type: 'file', filename: 'cheese.log' } },
+  categories: { default: { appenders: ['cheese'], level: 'error' } }
+});
+// const logger = log4js.getLogger('cheese');
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
 
 router.post('/register', validate(userValidator.create), function (req, res, next) {
   UserController.create(req.body)
@@ -24,6 +37,7 @@ router.get('/profile', RoleMiddleware.validateUserRole, function (req, res, next
 });
 
 router.post('/profile/avatar', function (req, res, next) {
+  logger.info('post request to profile/avatar');
   UserController.uploadAvatar(req, res)
     .then(response => res.json(response))
     .catch(err => next(err))
