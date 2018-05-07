@@ -27,7 +27,7 @@ router.get('/month/:month/page/:page', RoleMiddleware.validateUserRole, function
     .catch(err => next(err))
 });
 
-router.get('/id', RoleMiddleware.validateUserRole, function (req, res, next) {
+router.get('/:id', RoleMiddleware.validateUserRole, function (req, res, next) {
   TransferController.findById(req.params.id)
     .then(response => res.json(response))
     .catch(err => next(err))
