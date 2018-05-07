@@ -307,5 +307,14 @@ module.exports = {
         return Promise.resolve(result);
       }
     });
+  },
+  updatePhone: function (user, phone) {
+    return UserRepository.updatePhone(user, phone)
+      .then(response => {
+        let result = {};
+        result.success = true;
+        result.message = 'phone updated';
+        return Promise.resolve(result);
+      });
   }
 };

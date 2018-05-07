@@ -95,6 +95,12 @@ router.put('/pin', RoleMiddleware.validateRegisteredUser, function (req, res, ne
     .catch(err => next(err))
 });
 
+router.put('/phone', RoleMiddleware.validateRegisteredUser, function (req, res, next) {
+  UserController.updatePhone(req.user, req.body.phone)
+    .then(response => res.json(response))
+    .catch(err => next(err))
+});
+
 router.post('/forgot-password', function (req, res, next) {
   UserController.forgotPassword(req.body.email)
     .then(response => res.json(response))

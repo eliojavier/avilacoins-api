@@ -203,7 +203,7 @@ module.exports = {
       }
     )
   },
-  updateEmailNotificationStatus (user, status) {
+  updateEmailNotificationStatus(user, status) {
     return db.User.update(
       {
         email_notification: status
@@ -247,5 +247,17 @@ module.exports = {
       },
       include: [{model: db.Location, as: 'commerceType', attributes: ['name']}]
     })
+  },
+  updatePhone: function (user, phone) {
+    return db.User.update(
+      {
+        phone: phone
+      },
+      {
+        where: {
+          id: user.id
+        }
+
+      })
   }
 };
