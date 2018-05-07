@@ -30,4 +30,12 @@ module.exports = {
       })
     })
   },
+  delete(id, user) {
+    return db.Contact.destroy({
+      where: {
+        id: id,
+        fk_owner: user.id
+      }
+    })
+  }
 };

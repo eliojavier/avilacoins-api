@@ -35,5 +35,17 @@ module.exports = {
         result.success = false;
         return Promise.resolve(result);
       })
+  },
+  delete: function (id, user) {
+    return ContactRepository.delete(id, user)
+      .then(response => {
+        let result = {};
+        if (response) {
+          result.success = true;
+          return Promise.resolve(result);
+        }
+        result.success = false;
+        return Promise.resolve(result);
+      })
   }
 };

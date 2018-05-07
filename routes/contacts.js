@@ -21,4 +21,10 @@ router.post('/', RoleMiddleware.validateUserRole, function (req, res, next) {
     .catch(err => next(err))
 });
 
+router.delete('/:id', RoleMiddleware.validateUserRole, function (req, res, next) {
+  ContactController.delete(req.params.id, req.user)
+    .then(response => res.json(response))
+    .catch(err => next(err))
+});
+
 module.exports = router;
