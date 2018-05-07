@@ -22,7 +22,7 @@ module.exports = {
                 if (!log) {
                   throw new HTTPError(500, 'log not created');
                 }
-                if (payment.response == 'approved') {
+                if (payment.response === 'approved') {
                   return AccountRepository.findByUserId(user)
                     .then(account => {
                       return AccountRepository.addToBalance(account, purchase.coins)
@@ -33,7 +33,7 @@ module.exports = {
                         });
                     })
                 }
-                if (payment.response == 'disapproved') {
+                if (payment.response === 'disapproved') {
                   throw new HTTPError(402, 'payment declined');
                 }
               })
