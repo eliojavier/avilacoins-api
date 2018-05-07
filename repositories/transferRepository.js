@@ -86,7 +86,7 @@ module.exports = {
       where: {
         id: id
       },
-      include:[{model: db.User, as: 'user', attributes: ['username']}]
+      include:[{model: db.User, as: 'user', attributes: ['username', 'email']}]
     })
   }
 };
