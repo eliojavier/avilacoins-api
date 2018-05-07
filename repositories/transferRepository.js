@@ -80,5 +80,12 @@ module.exports = {
       },
       include: [{model: db.User, as: 'user', attributes: ['username']}]
     });
+  },
+  findById: function (id) {
+    return db.Transfer.findOne({
+      where: {
+        id: id
+      }
+    })
   }
 };

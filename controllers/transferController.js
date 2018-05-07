@@ -79,5 +79,13 @@ module.exports = {
         result.transfers = transfers;
         return Promise.resolve(result);
       })
+  },
+  findById: function (id) {
+    return TransferRepository.findById(id)
+      .then(transfer => {
+        let result = {};
+        result.transfer = transfer;
+        return Promise.resolve(result);
+      })
   }
 };
