@@ -26,8 +26,8 @@ module.exports = {
         ]
       },
       include: [
-        {model: db.User, as: 'user', attributes: ['username']},
-        {model: db.User, as: 'sender', attributes: ['username']}
+        {model: db.User, as: 'user', attributes: ['username', 'email']},
+        {model: db.User, as: 'sender', attributes: ['username', 'email']}
       ]
     })
   },
@@ -50,8 +50,8 @@ module.exports = {
         ]
       },
       include: [
-        {model: db.User, as: 'user', attributes: ['username']},
-        {model: db.User, as: 'sender', attributes: ['username']}
+        {model: db.User, as: 'user', attributes: ['username', 'email']},
+        {model: db.User, as: 'sender', attributes: ['username', 'email']}
       ]
     });
   },
@@ -67,12 +67,15 @@ module.exports = {
       where: {
         $and: [
           Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('Transfer.created_at')), month),
+        ],
+        $or: [
           {fk_sender: user.id},
+          {fk_receptor: user.id}
         ]
       },
       include: [
-        {model: db.User, as: 'user', attributes: ['username']},
-        {model: db.User, as: 'sender', attributes: ['username']}
+        {model: db.User, as: 'user', attributes: ['username', 'email']},
+        {model: db.User, as: 'sender', attributes: ['username', 'email']}
       ]
     });
   },
@@ -86,16 +89,19 @@ module.exports = {
         ['updated_at', 'DESC']
       ],
       where: {
-        fk_sender: user.id,
         created_at: {
           $between: [Sequelize.fn('DATE_SUB',
             Sequelize.literal('NOW()'),
             Sequelize.literal('INTERVAL 90 DAY')), Sequelize.fn('NOW')]
-        }
+        },
+        $or: [
+          {fk_sender: user.id},
+          {fk_receptor: user.id}
+        ]
       },
       include: [
-        {model: db.User, as: 'user', attributes: ['username']},
-        {model: db.User, as: 'sender', attributes: ['username']}
+        {model: db.User, as: 'user', attributes: ['username', 'email']},
+        {model: db.User, as: 'sender', attributes: ['username', 'email']}
       ]
     });
   },
@@ -105,8 +111,8 @@ module.exports = {
         id: id
       },
       include: [
-        {model: db.User, as: 'user', attributes: ['username']},
-        {model: db.User, as: 'sender', attributes: ['username']}
+        {model: db.User, as: 'user', attributes: ['username', 'email']},
+        {model: db.User, as: 'sender', attributes: ['username', 'email']}
       ]
     })
   }
