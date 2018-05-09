@@ -43,10 +43,16 @@ module.exports = {
       where: {
         $and: [
           Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('Transfer.created_at')), year),
+        ],
+        $or: [
           {fk_sender: user.id},
+          {fk_receptor: user.id}
         ]
       },
-      include: [{model: db.User, as: 'user', attributes: ['username']}]
+      include: [
+        {model: db.User, as: 'user', attributes: ['username']},
+        {model: db.User, as: 'sender', attributes: ['username']}
+      ]
     });
   },
   findByUserIdAndMonth: function (user, month, page) {
@@ -64,7 +70,10 @@ module.exports = {
           {fk_sender: user.id},
         ]
       },
-      include: [{model: db.User, as: 'user', attributes: ['username']}]
+      include: [
+        {model: db.User, as: 'user', attributes: ['username']},
+        {model: db.User, as: 'sender', attributes: ['username']}
+      ]
     });
   },
   findByUserIdAndLastThreeMonths: function (user, page) {
@@ -84,7 +93,10 @@ module.exports = {
             Sequelize.literal('INTERVAL 90 DAY')), Sequelize.fn('NOW')]
         }
       },
-      include: [{model: db.User, as: 'user', attributes: ['username']}]
+      include: [
+        {model: db.User, as: 'user', attributes: ['username']},
+        {model: db.User, as: 'sender', attributes: ['username']}
+      ]
     });
   },
   findById: function (id) {
@@ -92,7 +104,10 @@ module.exports = {
       where: {
         id: id
       },
-      include: [{model: db.User, as: 'user', attributes: ['username', 'email']}]
+      include: [
+        {model: db.User, as: 'user', attributes: ['username']},
+        {model: db.User, as: 'sender', attributes: ['username']}
+      ]
     })
   }
 };
