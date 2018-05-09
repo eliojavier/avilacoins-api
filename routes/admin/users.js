@@ -27,6 +27,4 @@ router.get('/manual-validation/:id', function (req, res, next) {
     .catch(err => next(err))
 });
 
-manualAccountCreation
-
 module.exports = router;
