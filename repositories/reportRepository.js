@@ -48,7 +48,7 @@ module.exports = {
       "AND ciudad.type = 'city' " +
       "AND ciudad.fk_location = estado.id " +
       "AND estado.type = 'state' " +
-      "GROUP BY estado. id, estado.name, u.fk_location " +
+      "GROUP BY estado.id, estado.name " +
       "UNION " +
       "SELECT estado.name, 0 AS quantity " +
       "FROM Location estado " +
