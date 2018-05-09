@@ -26,6 +26,12 @@ module.exports = function (sequelize, DataTypes) {
       onDelete: 'restrict',
       onUpdate: 'restrict'
     });
+    Transfer.belongsTo(models.User, {
+      as: 'sender',
+      foreignKey: {name: 'fk_sender', allowNull: true},
+      onDelete: 'restrict',
+      onUpdate: 'restrict'
+    });
   };
 
   return Transfer

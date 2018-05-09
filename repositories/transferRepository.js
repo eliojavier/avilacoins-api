@@ -25,7 +25,10 @@ module.exports = {
           {fk_receptor: user.id}
         ]
       },
-      include: [{model: db.User, as: 'user', attributes: ['username']}]
+      include: [
+        {model: db.User, as: 'user', attributes: ['username']},
+        {model: db.User, as: 'sender', attributes: ['username']}
+      ]
     })
   },
   findByUserIdAndYear: function (user, year, page) {
@@ -89,7 +92,7 @@ module.exports = {
       where: {
         id: id
       },
-      include:[{model: db.User, as: 'user', attributes: ['username', 'email']}]
+      include: [{model: db.User, as: 'user', attributes: ['username', 'email']}]
     })
   }
 };
