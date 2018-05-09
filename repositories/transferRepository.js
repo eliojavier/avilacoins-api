@@ -20,7 +20,10 @@ module.exports = {
         ['updated_at', 'DESC']
       ],
       where: {
-        fk_sender: user.id
+        $or: [
+          {fk_sender: user.id},
+          {fk_receptor: user.id}
+        ]
       },
       include: [{model: db.User, as: 'user', attributes: ['username']}]
     })
