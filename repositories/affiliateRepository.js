@@ -15,7 +15,7 @@ module.exports = {
     });
   },
   findAllWithLocation: function () {
-    return db.sequelize.query("SELECT u.*, ct.name, ciudad.name as ciudad, estado.name as estado, zona.name as zona " +
+    return db.sequelize.query("SELECT u.username, u.email, ct.name, ciudad.name as ciudad, estado.name as estado, zona.name as zona " +
       "FROM Location zona, Location ciudad, Location estado, User u, CommerceType ct " +
       "WHERE u.type = 'commerce' " +
       "AND u.status = 'active' " +
@@ -25,7 +25,7 @@ module.exports = {
       "AND ciudad.type = 'city' " +
       "AND ciudad.fk_location = estado.id " +
       "AND estado.type = 'state' " +
-      "AND u.fk_commerce_type = ct.id " +
+      "AND u.fk_commerce_type = ct.id" +
       {
         type: Sequelize.QueryTypes.select
       });
