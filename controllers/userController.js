@@ -316,5 +316,23 @@ module.exports = {
         result.message = 'phone updated';
         return Promise.resolve(result);
       });
+  },
+  manualAccountCreation: function (id) {
+    return this.findById(id)
+      .then(user => {
+        if (user != null) {
+          AccountRepository.create(user)
+            .then(account => {
+              if (!account) {
+                UserRepository.updateStatus(user, 'locked');
+                throw new HTTPError(400, 'account not created');
+              }
+              let result = {};
+              result.sucess = true;
+              result.message = 'account created';
+              return Promise.resolve(result);
+            });
+        }
+      })
   }
 };
