@@ -124,7 +124,10 @@ module.exports = {
       where: {
         status: 'active',
         id: user.id
-      }
+      },
+      include: [
+        {model: db.CommerceType, as: 'commerceType', attributes: ['name']},
+      ]
     })
   },
   findByPasswordToken: function (passwordToken) {
