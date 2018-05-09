@@ -21,7 +21,7 @@ router.post('/password/restore', RoleMiddleware.validateSuperAdminRole, function
     .catch(err => next(err))
 });
 
-router.post('/manual-validation/:id', function (req, res, next) {
+router.get('/manual-validation/:id', function (req, res, next) {
   UserController.manualAccountCreation(req.params.id)
     .then(response => res.json(response))
     .catch(err => next(err))
