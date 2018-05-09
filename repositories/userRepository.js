@@ -126,7 +126,7 @@ module.exports = {
         id: user.id
       },
       include: [
-        {model: db.CommerceType, as: 'commerceType', attributes: ['name']},
+        {model: db.CommerceType, as: 'commerceType', attributes: ['name', 'id']},
       ]
     })
   },
