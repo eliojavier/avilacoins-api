@@ -259,5 +259,13 @@ module.exports = {
         }
 
       })
-  }
+  },
+  findByUserId: function (id) {
+    return db.User.findOne({
+      where: {
+        status: 'active',
+        id: id
+      }
+    })
+  },
 };

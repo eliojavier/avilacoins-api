@@ -318,7 +318,7 @@ module.exports = {
       });
   },
   manualAccountCreation: function (id) {
-    return this.findById(id)
+    return this.findByUserId(id)
       .then(user => {
         if (user != null) {
           return AccountRepository.create(user)
