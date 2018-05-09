@@ -10,6 +10,14 @@ module.exports = {
         return Promise.resolve(result);
       })
   },
+  findAllWithLocation: function () {
+    return AffiliateRepository.findAllWithLocation()
+      .then(commerces => {
+        let result = {};
+        result.commerces = commerces;
+        return Promise.resolve(result);
+      })
+  },
   findAllAffiliates: function () {
     return AffiliateRepository.findAllAffiliates()
       .then(affiliates => {

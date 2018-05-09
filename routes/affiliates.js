@@ -3,8 +3,14 @@ let router = express.Router();
 let AffiliateController = require('../controllers/affiliateController');
 let RoleMiddleware = require('../middlewares/roleMiddleware');
 
+// router.get('/', function (req, res, next) {
+//   AffiliateController.findAll()
+//     .then(response => res.json(response))
+//     .catch(err => next(err))
+// });
+
 router.get('/', function (req, res, next) {
-  AffiliateController.findAll()
+  AffiliateController.findAllWithLocation()
     .then(response => res.json(response))
     .catch(err => next(err))
 });

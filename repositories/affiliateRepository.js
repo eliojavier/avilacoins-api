@@ -14,6 +14,22 @@ module.exports = {
       ]
     });
   },
+  findAllWithLocation: function () {
+    return db.sequelize.query("SELECT u.*, ct.name, ciudad.name as ciudad, estado.name as estado, zona.name as zona " +
+      "FROM Location zona, Location ciudad, Location estado, User u, CommerceType ct " +
+      "WHERE u.type = 'commerce' " +
+      "AND u.status = 'active' " +
+      "AND u.fk_location = zona.id " +
+      "AND zona.fk_location = ciudad.id " +
+      "AND zona.type = 'zone' " +
+      "AND ciudad.type = 'city' " +
+      "AND ciudad.fk_location = estado.id " +
+      "AND estado.type = 'state' " +
+      "AND u.fk_commerce_type = ct.id " +
+      {
+        type: Sequelize.QueryTypes.select
+      });
+  },
   findAllAffiliates: function () {
     return db.User.findAll({
       where: {
