@@ -30,7 +30,7 @@ router.post('/login', function (req, res, next) {
     .catch(err => next(err))
 });
 
-router.get('/profile', RoleMiddleware.validateUserRole, function (req, res, next) {
+router.get('/profile', RoleMiddleware.validateRegisteredUser, function (req, res, next) {
   UserController.findById(req.user)
     .then(response => res.json(response))
     .catch(err => next(err))
