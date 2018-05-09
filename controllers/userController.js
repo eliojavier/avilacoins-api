@@ -321,7 +321,7 @@ module.exports = {
     return this.findById(id)
       .then(user => {
         if (user != null) {
-          AccountRepository.create(user)
+          return AccountRepository.create(user)
             .then(account => {
               if (!account) {
                 UserRepository.updateStatus(user, 'locked');
