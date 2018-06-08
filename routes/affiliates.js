@@ -9,11 +9,6 @@ router.get('/', function (req, res, next) {
     .catch(err => next(err))
 });
 
-// router.get('/', function (req, res, next) {
-//   AffiliateController.findAllWithLocation()
-//     .then(response => res.json(response))
-//     .catch(err => next(err))
-// });
 
 router.get('/:id', RoleMiddleware.validateRegisteredUser, function (req, res, next) {
   AffiliateController.findById(req.params.id)

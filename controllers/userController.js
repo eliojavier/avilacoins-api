@@ -334,5 +334,21 @@ module.exports = {
             });
         }
       })
+  },
+  countAllUsers: function () {
+    return UserRepository.countAllUsers()
+      .then(total => {
+        let result = {};
+        result.total = total;
+        return Promise.resolve(result);
+      });
+  },
+  countAllCommerces: function () {
+    return UserRepository.countAllCommerces()
+      .then(total => {
+        let result = {};
+        result.total = total;
+        return Promise.resolve(result);
+      });
   }
 };

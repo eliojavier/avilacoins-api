@@ -1,6 +1,7 @@
 let db = require('../models');
 let randToken = require('rand-token');
 let securityConfig = require('../config/security.json');
+let Sequelize = require('sequelize');
 
 module.exports = {
   create: function (user) {
@@ -271,4 +272,24 @@ module.exports = {
       }
     })
   },
+  countAllUsers: function () {
+    return db.User.findAll({
+      where: {
+        type: 'user',
+        role: 'user',
+        status: 'active'
+      },
+      attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'total']]
+    });
+  },
+  countAllCommerces: function () {
+    return db.User.findAll({
+      where: {
+        type: 'commerce',
+        role: 'user',
+        status: 'active'
+      },
+      attributes: [[Sequelize.fn('COUNT', Sequelize.col('id')), 'total']]
+    });
+  }
 };

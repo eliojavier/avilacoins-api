@@ -27,4 +27,16 @@ router.get('/manual-validation/:id', function (req, res, next) {
     .catch(err => next(err))
 });
 
+router.get('/count/all-users', RoleMiddleware.validateAdminRole, function (req, res, next) {
+  UserController.countAllUsers()
+    .then(response => res.json(response))
+    .catch(err => next(err))
+});
+
+router.get('/count/all-commerces', RoleMiddleware.validateAdminRole, function (req, res, next) {
+  UserController.countAllCommerces()
+    .then(response => res.json(response))
+    .catch(err => next(err))
+});
+
 module.exports = router;
