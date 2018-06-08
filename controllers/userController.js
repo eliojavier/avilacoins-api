@@ -196,16 +196,6 @@ module.exports = {
               })
           })
       });
-
-    // return UserRepository.updateValidationToken(validationToken)
-    //   .then(response => {
-    //     if (!response[0]) {
-    //       throw new HTTPError(400, 'user not found');
-    //     }
-    //
-    //
-    //
-    //   })
   },
   restoreDefaultPassword(userId) {
     return UserRepository.restoreDefaultPassword(userId)
@@ -273,12 +263,6 @@ module.exports = {
           let index = old_path.lastIndexOf('/') + 1;
           let file_name = old_path.substr(index);
           let new_path = path.join(process.env.PWD, '/uploads/', file_name + '.' + file_ext);
-          console.log(old_path);
-          console.log(file_size);
-          console.log(file_ext);
-          console.log(index);
-          console.log(file_name);
-          console.log(new_path);
 
           fs.readFile(old_path, function(err, data) {
             fs.writeFile(new_path, data, function(err) {
@@ -350,5 +334,13 @@ module.exports = {
         result.total = total;
         return Promise.resolve(result);
       });
-  }
+  },
+  // updateStatus: function (body) {
+  //   return UserRepository.updateStatus(body.user, body.status)
+  //     .then(total => {
+  //       let result = {};
+  //       result.total = total;
+  //       return Promise.resolve(result);
+  //     });
+  // }
 };
