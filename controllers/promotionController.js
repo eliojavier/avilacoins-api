@@ -19,6 +19,19 @@ module.exports = {
   findAll: function () {
     return PromotionRepository.findAll()
       .then(promotions => {
+        let today = new Date();
+        promotions[0].forEach(function (promotion) {
+          if (promotion.status === '') {
+            let splitResult = promotion.end_date.split('/');
+            let promotionDay = splitResult[0];
+            let promotionMonth = splitResult[1];
+            let promotionYear = splitResult[2];
+            let promotionDate = new Date(promotionYear + '-' + promotionMonth + '-' + promotionDay);
+            if (promotionDate < today) {
+              return PromotionRepository.closePromotion(promotion.id);
+            }
+          }
+        });
         let result = {};
         result.promotions = promotions;
         return Promise.resolve(result);

@@ -211,4 +211,15 @@ module.exports = {
       }
     });
   },
+  closePromotion: function (id) {
+    return db.Promotion.update(
+      {
+        status: 'closed'
+      },
+      {
+        where: {
+          id: id
+        }
+      })
+  }
 };
