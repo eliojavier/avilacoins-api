@@ -279,7 +279,7 @@ module.exports = {
         role: 'user',
         status: 'active'
       },
-      attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'total']]
+      attributes: [[Sequelize.fn('COUNT', Sequelize.col('id')), 'total']]
     });
   },
   countAllCommerces: function () {
