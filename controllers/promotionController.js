@@ -21,7 +21,7 @@ module.exports = {
       .then(promotions => {
         let today = new Date();
         promotions[0].forEach(function (promotion) {
-          if (promotion.status === '') {
+          if (promotion.status === 'open') {
             let splitResult = promotion.end_date.split('/');
             let promotionDay = splitResult[0];
             let promotionMonth = splitResult[1];
