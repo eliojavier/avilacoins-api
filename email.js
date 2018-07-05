@@ -110,6 +110,48 @@ module.exports = {
       console.log(response.body);
       console.log(response.headers);
     });
+  },
+  receivedTransferEmail: function(user, receptor, transfer) {
+    let helper = require('sendgrid').mail;
+    let from_email = new helper.Email('avilacoinsdev@gmail.com');
+    let to_email = new helper.Email(user.email);
+    let subject = '¡Transferencia recibida!';
+    let content = new helper.Content('text/html', '<p>Hola ' + receptor.name + ', has recibido una transferencia de ' + user.name + ' por ' + transfer.amount + '</p>');
+    let mail = new helper.Mail(from_email, subject, to_email, content);
+
+    let sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+    let request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: mail.toJSON(),
+    });
+
+    sg.API(request, function (error, response) {
+      console.log(response.statusCode);
+      console.log(response.body);
+      console.log(response.headers);
+    });
+  },
+  sentTransferEmail: function (user, receptor, transfer) {
+    let helper = require('sendgrid').mail;
+    let from_email = new helper.Email('avilacoinsdev@gmail.com');
+    let to_email = new helper.Email(user.email);
+    let subject = '¡Transferencia enviada!';
+    let content = new helper.Content('text/html', '<p>Hola ' + user.name + ', has enviado una transferencia a ' + receptor.name + 'por ' + transfer.amount +'</p>');
+    let mail = new helper.Mail(from_email, subject, to_email, content);
+
+    let sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+    let request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: mail.toJSON(),
+    });
+
+    sg.API(request, function (error, response) {
+      console.log(response.statusCode);
+      console.log(response.body);
+      console.log(response.headers);
+    });
   }
   // approvedWithdrawEmail: function (user) {
   //   app.mailer.send('approved-withdraw', {

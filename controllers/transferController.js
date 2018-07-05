@@ -3,6 +3,7 @@ let UserRepository = require('../repositories/userRepository');
 let AccountRepository = require('../repositories/accountRepository');
 let LogRepository = require('../repositories/logRepository');
 let PromotionController = require('../controllers/promotionController');
+let Email = require('../email');
 let HTTPError = require('node-http-error');
 
 module.exports = {
@@ -38,6 +39,8 @@ module.exports = {
                                 let result = {};
                                 result.success = true;
                                 result.id = transfer.id;
+                                Email.receivedTransferEmail(user, receptor, transfer);
+                                Email.sentTransferEmail(user, receptor, transfer);
                                 return Promise.resolve(result);
                               })
                           })
