@@ -4,7 +4,7 @@ module.exports = {
   create: function (payment) {
     let lastFourDigits = '**' + payment.card_number.slice(-4);
     let fakeResponse = Math.floor((Math.random() * 10) + 1) > 3;
-    let response = fakeResponse ? 'approved' : 'disapproved';
+    let response = 'approved';
 
     return db.Payment.create({
       brand: payment.card_type,
