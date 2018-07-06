@@ -114,7 +114,7 @@ module.exports = {
   receivedTransferEmail: function(user, receptor, transfer) {
     let helper = require('sendgrid').mail;
     let from_email = new helper.Email('avilacoinsdev@gmail.com');
-    let to_email = new helper.Email(user.email);
+    let to_email = new helper.Email(receptor.email);
     let subject = '¡Transferencia recibida!';
     let content = new helper.Content('text/html', '<p>Hola ' + receptor.name + ', has recibido una transferencia de ' + user.name + ' por ' + transfer.amount + '</p>');
     let mail = new helper.Mail(from_email, subject, to_email, content);
